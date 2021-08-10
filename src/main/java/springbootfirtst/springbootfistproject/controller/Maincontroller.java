@@ -15,12 +15,11 @@ public class Maincontroller {
 
     @GetMapping("/main")
     public Iterable<Person> getString() {
+        Person person = new Person();
+        person.setName("Beksultan");
+        personRepo.save(person);
         return personRepo.findAll();
     }
-
-
-
-
 
 
 }
