@@ -19,6 +19,7 @@ public class Maincontroller {
 
     private final PersonService personService;
 
+
     @Autowired
     public Maincontroller(PersonService personService) {
         this.personService = personService;
@@ -27,12 +28,17 @@ public class Maincontroller {
 
     @GetMapping("/main")
     private Iterable<Person> getPerson() {
+
         return personService.getListPeople();
     }
 
     @GetMapping(path = "/person/{uuid}")
     private Person getStudentById(@PathVariable("uuid") UUID uuid) throws NotFoundException {
-        return personService.findPersonById(uuid).orElse(null);
+        Person person = personService.findPersonById(uuid).orElse(null);
+        if (person == null) {
+            throw new NotFoundException("Not found  Exception");
+        }
+        return person;
     }
 
     @GetMapping("/root")
@@ -50,6 +56,11 @@ public class Maincontroller {
     @GetMapping("/admin")
     private String admin() {
         return "<h1>Welcome admin</h1>";
+    }
+
+    @GetMapping("/student")
+    private String student() {
+        return "Welcome student to this website";
     }
 
 

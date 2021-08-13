@@ -1,6 +1,7 @@
 package springbootfirtst.springbootfistproject.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import springbootfirtst.springbootfistproject.models.Person;
 import springbootfirtst.springbootfistproject.repo.PersonRepo;
@@ -13,6 +14,9 @@ import java.util.UUID;
 public class PersonService {
 
     private final PersonRepo personRepo;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     public PersonService(PersonRepo personRepo) {
@@ -29,6 +33,19 @@ public class PersonService {
     public Optional<Person> findPersonById(UUID id) {
         return personRepo.findById(id);
     }
+
+    public void savePerson(Person person){
+        personRepo.save(person);
+    }
+
+    public void deletedPersonById(UUID id){
+        personRepo.deleteById(id);
+    }
+
+    public void updatePersonById(UUID id,Person person){
+        personRepo.updatePersonById(id,person.getName());
+    }
+
 
 
 }
